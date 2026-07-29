@@ -56,6 +56,11 @@ public final class DeobfESP {
     private DeobfESP() {
     }
 
+    /**
+     * 为目标记录一次命中特效。
+     *
+     * @param target 目标实体
+     */
     public static void markHit(LivingEntity target) {
         if (target == null || target.isDeadOrDying()) return;
 
@@ -66,10 +71,16 @@ public final class DeobfESP {
         }
     }
 
+    /**
+     * 清除全部活动命中特效。
+     */
     public static void clear() {
         EFFECTS.clear();
     }
 
+    /**
+     * 仅保留仍处于上升阶段的命中特效。
+     */
     public static void retainRisingEffects() {
         if (EFFECTS.isEmpty()) return;
         if (mc.level == null) {
@@ -97,6 +108,15 @@ public final class DeobfESP {
         }
     }
 
+    /**
+     * 渲染全部活动命中特效。
+     *
+     * @param poseStack 渲染姿态栈
+     * @param size 特效尺寸
+     * @param spins 旋转圈数
+     * @param wobble 摆动幅度
+     * @param flyHeight 特效上升高度
+     */
     public static void render(PoseStack poseStack, float size, float spins, float wobble, float flyHeight) {
         if (EFFECTS.isEmpty()) return;
         if (mc.level == null) {

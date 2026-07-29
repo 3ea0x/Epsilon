@@ -11,6 +11,11 @@ public class PacketUtils {
 
     public static final Set<Packet<?>> bypassedPackets = new HashSet<>();
 
+    /**
+     * 发送网络包，并使该包绕过 Epsilon 的发送事件。
+     *
+     * @param packet 待发送或过滤的网络包
+     */
     public static void sendSilently(Packet<?> packet) {
         bypassedPackets.add(packet);
         mc.getConnection().send(packet);
