@@ -25,22 +25,19 @@ public class SilentRotationManager extends RotationManager {
     @EventHandler(priority = EventPriority.HIGH)
     private void onMoveInput(KeyboardInputEvent event) {
         MovementFix moveFix = MovementFix.INSTANCE;
-        if (moveFix.isEnabled() && active && rotations != null && !mc.player.isFallFlying()) {
+        if (moveFix.isEnabled() && hasActiveRotation() && !mc.player.isFallFlying()) {
             moveFix.fixMovement(event, rotations.getYaw());
         }
     }
 
-    @EventHandler
-    private void onRaytrace(RaytraceEvent event) {
-        if (ClientSetting.INSTANCE.modifyCrosshair.getValue() && active && rotations != null && !FreeCamera.INSTANCE.isEnabled()) {
-            event.setYaw(rotations.getYaw());
-            event.setPitch(rotations.getPitch());
-        }
+    @Override
+    protected boolean shouldModifyCrosshair() {
+        return ClientSetting.INSTANCE.modifyCrosshair.getValue() && !FreeCamera.INSTANCE.isEnabled();
     }
 
     @EventHandler
     private void onItemRaytrace(UseItemRaytraceEvent event) {
-        if (active && rotations != null) {
+        if (hasActiveRotation()) {
             event.setYaw(rotations.getYaw());
             event.setPitch(rotations.getPitch());
         }
@@ -48,21 +45,21 @@ public class SilentRotationManager extends RotationManager {
 
     @EventHandler
     private void onStrafe(StrafeEvent event) {
-        if (MovementFix.INSTANCE.isEnabled() && active && rotations != null && !mc.player.isFallFlying()) {
+        if (MovementFix.INSTANCE.isEnabled() && hasActiveRotation() && !mc.player.isFallFlying()) {
             event.setYaw(rotations.getYaw());
         }
     }
 
     @EventHandler
     private void onJump(JumpEvent event) {
-        if (MovementFix.INSTANCE.isEnabled() && active && rotations != null && !mc.player.isFallFlying()) {
+        if (MovementFix.INSTANCE.isEnabled() && hasActiveRotation() && !mc.player.isFallFlying()) {
             event.setYaw(rotations.getYaw());
         }
     }
 
     @EventHandler
     private void onFallFlying(FallFlyingEvent event) {
-        if (MovementFix.INSTANCE.isEnabled() && active && rotations != null) {
+        if (MovementFix.INSTANCE.isEnabled() && hasActiveRotation()) {
             event.setYaw(rotations.getYaw());
             event.setPitch(rotations.getPitch());
         }
@@ -70,7 +67,7 @@ public class SilentRotationManager extends RotationManager {
 
     @EventHandler
     private void onUseItem(UseItemEvent event) {
-        if (active && rotations != null) {
+        if (hasActiveRotation()) {
             event.setYaw(rotations.getYaw());
             event.setPitch(rotations.getPitch());
         }
@@ -78,7 +75,7 @@ public class SilentRotationManager extends RotationManager {
 
     @EventHandler
     private void onFireworkUpdate(FireworkRotationEvent event) {
-        if (active && rotations != null) {
+        if (hasActiveRotation()) {
             event.setYaw(rotations.getYaw());
             event.setPitch(rotations.getPitch());
         }

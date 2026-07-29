@@ -21,6 +21,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.protocol.game.ServerboundSwingPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.awt.*;
@@ -182,15 +183,16 @@ public class KillAura extends Module {
     }
 
     private void clickTargets(List<LivingEntity> targets) {
+        HitResult hitResult = Managers.ROTATION.getHitResult();
         if (targetMode.is(TargetMode.Multiple)) {
             for (LivingEntity target : targets) {
-                if (throughWalls.getValue() || mc.hitResult.getType() == HitResult.Type.ENTITY) {
+                if (throughWalls.getValue() || (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY)) {
                     doAttack(target);
                 }
             }
             switchIndex++;
         } else {
-            if (throughWalls.getValue() || (mc.hitResult.getType() == HitResult.Type.ENTITY && mc.crosshairPickEntity.is(target))) {
+            if (throughWalls.getValue() || (hitResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() == target)) {
                 doAttack(target);
             }
             if (targetMode.is(TargetMode.Switch)) {

@@ -9,6 +9,7 @@ import com.github.epsilon.utils.rotation.RotationUtils;
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerRotationPacket;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Function;
 
@@ -34,6 +35,8 @@ public abstract class RotationManager {
     protected Function<Rot2f, Boolean> raytrace;
     private float randomAngle;
     private boolean s08;
+    private HitResult rotationHitResult;
+    private boolean calculatingHitResult;
 
     protected int priority;
 
@@ -126,7 +129,36 @@ public abstract class RotationManager {
 
         smoothed = true;
 
-        mc.pick(1.0f);
+        updateHitResult();
+        if (shouldModifyCrosshair()) {
+            mc.pick(1.0f);
+        }
+    }
+
+    private void updateHitResult() {
+        if (!hasActiveRotation() || mc.player == null || mc.level == null) {
+            rotationHitResult = null;
+            return;
+        }
+
+        calculatingHitResult = true;
+        try {
+            rotationHitResult = mc.player.raycastHitResult(1.0f, mc.player);
+        } finally {
+            calculatingHitResult = false;
+        }
+    }
+
+    protected boolean shouldModifyCrosshair() {
+        return false;
+    }
+
+    protected final boolean hasActiveRotation() {
+        return active && rotations != null;
+    }
+
+    protected static float clampPitch(float pitch) {
+        return Mth.clamp(pitch, -90.0F, 90.0F);
     }
 
     protected void correctDisabledRotations() {
@@ -150,6 +182,15 @@ public abstract class RotationManager {
 
     public Rot2f getLastRotation() {
         return lastRotations != null ? lastRotations : new Rot2f(mc.player.yRotO, mc.player.xRotO);
+    }
+
+    /**
+     * 获取按当前托管旋转计算的逻辑命中结果。未启用托管旋转时返回原版准星结果。
+     *
+     * @return 当前逻辑命中结果
+     */
+    public HitResult getHitResult() {
+        return hasActiveRotation() && rotationHitResult != null ? rotationHitResult : mc.hitResult;
     }
 
     public boolean isActive() {
@@ -179,6 +220,7 @@ public abstract class RotationManager {
         this.rotationSpeed = manager.rotationSpeed;
         this.raytrace = manager.raytrace;
         this.priority = manager.priority;
+        this.rotationHitResult = manager.rotationHitResult;
     }
 
     @EventHandler
@@ -194,6 +236,8 @@ public abstract class RotationManager {
         smoothed = false;
         raytrace = null;
         randomAngle = 0;
+        rotationHitResult = null;
+        calculatingHitResult = false;
         resetModeState();
         s08 = false;
     }
@@ -205,13 +249,21 @@ public abstract class RotationManager {
         }
     }
 
+    @EventHandler
+    private void onRaytrace(RaytraceEvent event) {
+        if (!hasActiveRotation() || (!calculatingHitResult && !shouldModifyCrosshair())) return;
+
+        event.setYaw(rotations.getYaw());
+        event.setPitch(clampPitch(rotations.getPitch()));
+    }
+
     @EventHandler(priority = -1000)
     protected void onPlayerTick(PlayerTickEvent.Pre event) {
         if (!active || rotations == null || lastRotations == null || targetRotations == null) {
             rotations = lastRotations = targetRotations = new Rot2f(mc.player.getYRot(), mc.player.getXRot());
         }
 
-        if (active) {
+        if (hasActiveRotation()) {
             smooth();
             afterPlayerTick();
         }
