@@ -19,10 +19,8 @@
 </p>
 
 > [!IMPORTANT]
-> ## Public Archive 公告
-> 本仓库将进入 Public Archive 准备阶段，当前公开源码会继续保留，供查阅和参考。公开开发、Issue 维护与免费公开发布将逐步停止。
->
-> 客户端的持续开发需要长期投入时间和资源；大量二改版本被他人用于商业化获利，已经让原有的公益开发模式难以维持。为让开发可以继续，后续官方版本、支持服务与分发可能转为付费模式。
+> ## 开发暂缓公告
+> Epsilon 目前将暂缓开发。在此期间，官方将减缓对战斗类功能的维护，但仍然欢迎提交 **Pull Request**。
 >
 > 本仓库中已经发布的代码仍遵循 [GNU General Public License v3.0](LICENSE)。本公告不会改变现有版本的许可证或既有权利。
 
@@ -36,14 +34,18 @@
 
 ## 🎨 渲染系统
 
-Lumin 渲染系统提供自定义渲染管线，支持：
+图形技术栈由以下开源仓库共同构成：
+
+- [LuminGraphics](https://github.com/slmpc/LuminGraphics)
+- [LuminGraphics-MC](https://github.com/slmpc/LuminGraphics-MC)
+- [PrismRHI](https://github.com/slmpc/PrismRHI)
+
+Lumin 渲染系统通过 LuminGraphics-MC 接入 Minecraft，并由 PrismRHI 提供底层支持。它提供自定义渲染管线，支持：
 - 矩形与圆角矩形
 - 阴影与模糊效果
 - TTF 字体渲染
 - 纹理渲染
 - 自定义顶点格式
-
-详见 [渲染系统文档](common/src/main/java/com/github/epsilon/graphics/README_zh.md)
 
 基于 Lumin 的声明式 UI 层见 [Epsilon GUI Library 文档](docs/gui-library.md)。
 
@@ -67,7 +69,8 @@ Lumin 渲染系统提供自定义渲染管线，支持：
 
 ## 📝 许可证
 
-本项目，包括 Lumin Graphics，统一遵循 [GNU General Public License v3.0](LICENSE) 许可证。
+Epsilon 遵循 [GNU General Public License v3.0](LICENSE) 许可证。
+[LuminGraphics](https://github.com/slmpc/LuminGraphics)、[LuminGraphics-MC](https://github.com/slmpc/LuminGraphics-MC) 和 [PrismRHI](https://github.com/slmpc/PrismRHI) 是分别发布的独立项目，遵循 `LGPL-3.0-only` 许可证。
 
 ---
 

@@ -19,10 +19,8 @@
 </p>
 
 > [!IMPORTANT]
-> ## Public archive notice
-> This repository is being prepared for archival and will remain available as a public reference for the current source release. Active public development, issue triage, and free public releases are winding down.
->
-> Maintaining a feature-rich client takes sustained time and resources. Repackaged and modified builds being monetized by others have made the previous public-development model unsustainable. Future official releases, support, and distribution may move to a paid model so development can continue.
+> ## Development pause notice
+> Epsilon development is currently paused. Official maintenance of combat-related features will slow down during this period, but **pull requests** remain welcome.
 >
 > The code already published here remains available under the [GNU General Public License v3.0](LICENSE). This notice does not change the license or rights for existing releases.
 
@@ -36,14 +34,18 @@ A modern multi loader Minecraft utility client built on NeoForge & Fabric with a
 
 ## 🎨 Graphics System
 
-The Lumin rendering system provides custom render pipelines for:
+The graphics stack is developed across the following open-source repositories:
+
+- [LuminGraphics](https://github.com/slmpc/LuminGraphics)
+- [LuminGraphics-MC](https://github.com/slmpc/LuminGraphics-MC)
+- [PrismRHI](https://github.com/slmpc/PrismRHI)
+
+The Lumin rendering system, integrated with Minecraft through LuminGraphics-MC and backed by PrismRHI, provides custom render pipelines for:
 - Rectangles & Round Rectangles
 - Shadows & Blur effects
 - TTF Font rendering
 - Texture rendering
 - Custom vertex formats
-
-See [Lumin Graphics README](common/src/main/java/com/github/epsilon/graphics/README.md) for details.
 
 The declarative UI layer built on Lumin is documented in the [Epsilon GUI Library Guide](docs/gui-library.md).
 
@@ -67,7 +69,8 @@ Special thanks to the following projects. See [NOTICE](NOTICE.md) for third-part
 
 ## 📝 License
 
-This project, including Lumin Graphics, is licensed under the [GNU General Public License v3.0](LICENSE).
+Epsilon is licensed under the [GNU General Public License v3.0](LICENSE).
+[LuminGraphics](https://github.com/slmpc/LuminGraphics), [LuminGraphics-MC](https://github.com/slmpc/LuminGraphics-MC), and [PrismRHI](https://github.com/slmpc/PrismRHI) are separate projects licensed under `LGPL-3.0-only`.
 
 ---
 
