@@ -27,7 +27,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build
-        run: ./gradlew buildRelease --no-daemon --stacktrace
+        run: ./gradlew build
 
       - name: Get current date
         run: |

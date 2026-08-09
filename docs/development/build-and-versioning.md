@@ -42,7 +42,7 @@ Windows PowerShell：
 CI 使用 Java 25 执行：
 
 ```powershell
-.\gradlew.bat buildRelease --no-daemon --stacktrace
+.\gradlew.bat build
 ```
 
 构建产物包括 Fabric 与 NeoForge Jar，并由 CI 上传。
