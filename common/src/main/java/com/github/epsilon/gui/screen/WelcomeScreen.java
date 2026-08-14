@@ -20,7 +20,7 @@ public class WelcomeScreen extends Screen {
     private static final String TITLE_B64 = "5qyi6L+O5L2/55SoIEVwc2lsb24gLyBXZWxjb21lIHRvIEVwc2lsb24=";
     private static final String NOTICE_B64 = "5pys5a6i5oi356uv5bey5LuO5byA5rqQ6L2s5Li65LuY6LS554mI5pys77yM6I635Y+W5YaF6YOo54mI5pys6K+36IGU57O7IFFR77yaMzM3MzUwMjE2M+OAgiAvIFRoaXMgY2xpZW50IGhhcyB0cmFuc2l0aW9uZWQgZnJvbSBvcGVuIHNvdXJjZSB0byBhIHBhaWQgdmVyc2lvbi4gQ29udGFjdCBRUSAzMzczNTAyMTYzIHRvIG9idGFpbiB0aGUgaW50ZXJuYWwgdmVyc2lvbi4=";
     private static final String CONTINUE_B64 = "57un57utIC8gQ29udGludWU=";
-    private static final String DONT_SHOW_AGAIN_B64 = "5LiL5qyh5LiN5YaN5pi+56S6IC8gRG8gbm90IHNob3cgYWdhaW4=";
+    private static final String DONT_SHOW_AGAIN_B64 = "5LiL5qyh5LiN5YaN5pi+56S6ICjkvaDngrnkuobkuZ/msqHnlKgp";
 
     public static final WelcomeScreen INSTANCE = new WelcomeScreen();
 
@@ -117,7 +117,7 @@ public class WelcomeScreen extends Screen {
     }
 
     private void confirmDoNotShowAgain() {
-        ClientSetting.INSTANCE.showWelcomeScreen.setValue(false);
+//        ClientSetting.INSTANCE.showWelcomeScreen.setValue(false);
         ConfigHolder.INSTANCE.saveNow();
         continueToNextScreen();
     }

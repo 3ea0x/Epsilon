@@ -70,7 +70,6 @@ public class NoSlow extends Module {
             case Jump -> jump(event);
             case Grim1_2 -> grim50(event);
             case Grim1_3 -> grim33(event);
-            case GrimC0F -> grimC0F(event);
         }
     }
 
