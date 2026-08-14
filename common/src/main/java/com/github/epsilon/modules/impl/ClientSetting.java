@@ -168,7 +168,7 @@ public class ClientSetting extends Module {
 
     public final EnumSetting<MainMenuScreen.Background> mainMenuBackground = enumSetting("MainMenu Background", MainMenuScreen.Background.PLANET, useMainMenu::getValue).group(sgAppearance);
 
-    public final BoolSetting showWelcomeScreen = boolSetting("Show Welcome Screen", true).rootSetting().group(sgAppearance);
+//    public final BoolSetting showWelcomeScreen = boolSetting("Show Welcome Screen", true).rootSetting().group(sgAppearance);
 
     // Lua Scripts
     public final BoolSetting luaScriptsEnabled = boolSetting("Enable Lua Scripts", false,

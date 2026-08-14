@@ -22,16 +22,15 @@ public class MixinTitleScreen {
     private void onInit(CallbackInfo ci) {
         if (!epsilon$welcomeHandled) {
             epsilon$welcomeHandled = true;
-            if (ClientSetting.INSTANCE.showWelcomeScreen.getValue()) {
+//            if (ClientSetting.INSTANCE.showWelcomeScreen.getValue()) {
                 ci.cancel();
-                mc.setScreen(WelcomeScreen.INSTANCE);
-                return;
+                mc.setScreen(WelcomeScreen.INSTANCE); // 你必须看
+//            }
+        } else {
+            if (ClientSetting.INSTANCE.useMainMenu.getValue()) {
+                ci.cancel();
+                mc.setScreen(MainMenuScreen.INSTANCE);
             }
-        }
-
-        if (ClientSetting.INSTANCE.useMainMenu.getValue()) {
-            ci.cancel();
-            mc.setScreen(MainMenuScreen.INSTANCE);
         }
     }
 
