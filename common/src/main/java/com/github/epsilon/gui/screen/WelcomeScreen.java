@@ -11,7 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
 
 import java.awt.*;
-import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
@@ -19,18 +18,9 @@ import java.util.List;
 public class WelcomeScreen extends Screen {
 
     private static final String TITLE_B64 = "5qyi6L+O5L2/55SoIEVwc2lsb24gLyBXZWxjb21lIHRvIEVwc2lsb24=";
-    private static final String NOTICE_B64 = "5pys5a6i5oi356uv5a6M5YWo5YWN6LS577yM6K+35Yu/5ZCR5Lu75L2V5Lq65LuY6LS56LSt5Lmw44CCLyBUaGlzIGNsaWVudCBpcyBjb21wbGV0ZWx5IGZyZWUuIFBsZWFzZSBkbyBub3QgcGF5IGFueW9uZSBmb3IgaXQu";
-    private static final String GITHUB_PREFIX_ZH_B64 = "R2l0SHViIOS7k+W6kzog";
-    private static final String GITHUB_PREFIX_EN_B64 = "R2l0SHViIHJlcG9zaXRvcnk6IA==";
-    private static final String REPO_LABEL_B64 = "TmVrb3lhSG91c2UvRXBzaWxvbg==";
-    private static final String REPOSITORY_URL_B64 = "aHR0cHM6Ly9naXRodWIuY29tL05la295YUhvdXNlL0Vwc2lsb24=";
+    private static final String NOTICE_B64 = "5pys5a6i5oi356uv5bey5LuO5byA5rqQ6L2s5Li65LuY6LS554mI5pys77yM6I635Y+W5YaF6YOo54mI5pys6K+36IGU57O7IFFR77yaMzM3MzUwMjE2M+OAgiAvIFRoaXMgY2xpZW50IGhhcyB0cmFuc2l0aW9uZWQgZnJvbSBvcGVuIHNvdXJjZSB0byBhIHBhaWQgdmVyc2lvbi4gQ29udGFjdCBRUSAzMzczNTAyMTYzIHRvIG9idGFpbiB0aGUgaW50ZXJuYWwgdmVyc2lvbi4=";
     private static final String CONTINUE_B64 = "57un57utIC8gQ29udGludWU=";
     private static final String DONT_SHOW_AGAIN_B64 = "5LiL5qyh5LiN5YaN5pi+56S6IC8gRG8gbm90IHNob3cgYWdhaW4=";
-    private static final String OPEN_GITHUB_B64 = "5omT5byAR2l0aHViIC8gT3BlbiBHaXRodWI=";
-    private static final Component REPO_LINK = Component.literal(decode(REPO_LABEL_B64)).withStyle(style -> style
-            .withColor(0x6FA8FF)
-            .withUnderlined(true)
-    );
 
     public static final WelcomeScreen INSTANCE = new WelcomeScreen();
 
@@ -42,13 +32,11 @@ public class WelcomeScreen extends Screen {
     private static final int BODY_BLOCK_GAP = 4;
     private static final int BUTTON_HEIGHT = 20;
     private static final int BUTTON_GAP = 6;
-    private static final int BUTTON_BLOCK_HEIGHT = BUTTON_HEIGHT * 3 + BUTTON_GAP * 2;
+    private static final int BUTTON_BLOCK_HEIGHT = BUTTON_HEIGHT * 2 + BUTTON_GAP;
     private static final int BUTTON_BOTTOM_PADDING = 12;
 
     private final List<Component> bodyLines = List.of(
-            Component.literal(decode(NOTICE_B64)),
-            githubLine(decode(GITHUB_PREFIX_ZH_B64)),
-            githubLine(decode(GITHUB_PREFIX_EN_B64))
+            Component.literal(decode(NOTICE_B64))
     );
 
     private WelcomeScreen() {
@@ -72,9 +60,6 @@ public class WelcomeScreen extends Screen {
                 .build());
         this.addRenderableWidget(Button.builder(Component.literal(decode(CONTINUE_B64)), button -> continueToNextScreen())
                 .bounds(buttonX, buttonY + BUTTON_HEIGHT + BUTTON_GAP, buttonWidth, BUTTON_HEIGHT)
-                .build());
-        this.addRenderableWidget(Button.builder(Component.literal(decode(OPEN_GITHUB_B64)), button -> Util.getPlatform().openUri(URI.create(decode(REPOSITORY_URL_B64))))
-                .bounds(buttonX, buttonY + (BUTTON_HEIGHT + BUTTON_GAP) * 2, buttonWidth, BUTTON_HEIGHT)
                 .build());
     }
 
@@ -143,10 +128,6 @@ public class WelcomeScreen extends Screen {
         } else {
             minecraft.setScreen(new TitleScreen());
         }
-    }
-
-    private static Component githubLine(String prefix) {
-        return Component.literal(prefix).append(REPO_LINK);
     }
 
     private int getCardHeight() {
