@@ -926,10 +926,10 @@ public class ConfigHolder {
                 return;
             }
 
-            Boolean legacyValue = readLegacyShowWelcomeScreen();
-            if (legacyValue != null) {
-                ClientSetting.INSTANCE.showWelcomeScreen.setValueSilently(legacyValue);
-            }
+//            Boolean legacyValue = readLegacyShowWelcomeScreen();
+//            if (legacyValue != null) {
+//                ClientSetting.INSTANCE.showWelcomeScreen.setValueSilently(legacyValue);
+//            }
             saveRootClientSettings();
         } catch (Exception e) {
             Constants.LOGGER.error("读取根配置失败", e);
@@ -955,7 +955,7 @@ public class ConfigHolder {
     }
 
     private static String rootSettingKey(Setting<?> setting) {
-        if (setting == ClientSetting.INSTANCE.showWelcomeScreen) return "showWelcomeScreen";
+//        if (setting == ClientSetting.INSTANCE.showWelcomeScreen) return "showWelcomeScreen";
         String[] words = setting.getName().trim().split(" +");
         if (words.length == 0) return setting.getName();
         StringBuilder key = new StringBuilder(words[0].toLowerCase(java.util.Locale.ROOT));
@@ -1000,28 +1000,28 @@ public class ConfigHolder {
         }
     }
 
-    private Boolean readLegacyShowWelcomeScreen() {
-        Path legacyClientSettingFile = getModuleFile(getActiveConfigStorageDir(), ClientSetting.INSTANCE);
-        if (!Files.exists(legacyClientSettingFile)) {
-            return null;
-        }
-        try {
-            String json = Files.readString(legacyClientSettingFile, StandardCharsets.UTF_8);
-            JsonElement parsed = JsonParser.parseString(json);
-            if (parsed != null && parsed.isJsonObject()) {
-                JsonObject settingsObj = getObject(parsed.getAsJsonObject(), "settings");
-                if (settingsObj != null) {
-                    JsonElement value = settingsObj.get(ClientSetting.INSTANCE.showWelcomeScreen.getName());
-                    if (value != null && value.isJsonPrimitive()) {
-                        return value.getAsBoolean();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Constants.LOGGER.error("读取旧版欢迎页配置失败", e);
-        }
-        return null;
-    }
+//    private Boolean readLegacyShowWelcomeScreen() {
+//        Path legacyClientSettingFile = getModuleFile(getActiveConfigStorageDir(), ClientSetting.INSTANCE);
+//        if (!Files.exists(legacyClientSettingFile)) {
+//            return null;
+//        }
+//        try {
+//            String json = Files.readString(legacyClientSettingFile, StandardCharsets.UTF_8);
+//            JsonElement parsed = JsonParser.parseString(json);
+//            if (parsed != null && parsed.isJsonObject()) {
+//                JsonObject settingsObj = getObject(parsed.getAsJsonObject(), "settings");
+//                if (settingsObj != null) {
+////                    JsonElement value = settingsObj.get(ClientSetting.INSTANCE.showWelcomeScreen.getName());
+////                    if (value != null && value.isJsonPrimitive()) {
+////                        return value.getAsBoolean();
+////                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            Constants.LOGGER.error("读取旧版欢迎页配置失败", e);
+//        }
+//        return null;
+//    }
 
     private void migrateLegacyLayoutsIfNeeded(List<Module> modules) throws IOException {
         Path defaultConfigDir = getConfigStorageDir(DEFAULT_CONFIG_NAME);
